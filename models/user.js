@@ -23,8 +23,24 @@ module.exports = (sequelize,DataTypes)=>{
             set(value) {
                throw new Error('Do not try to set the `fullName` value!');
             }
+        },
+        email:{
+            type:DataTypes.STRING,
+            unique:true,
+            validate:{
+                isEmail: {msg:'Please enter a valid email'}
+            }
+        },
+        city:{
+            type:DataTypes.STRING,
+            allowNull:false,
+             validate: {
+                isIn: {
+                  args: [['Indore', 'Bhopal', 'Jabalpur', 'Delhi']],
+                  msg: 'Must be Indore, Bhopal, Jabalpur or Delhi'
+               }
+             }
         }
-
     },{
         tableName:'users'
     })

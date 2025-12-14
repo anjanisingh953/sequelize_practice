@@ -1,8 +1,11 @@
+const {QueryTypes} = require('sequelize');
  const db = require('../models/index');
  const User = db.user;
 
 
 const postUsers = async(req,res)=>{
+    
+    try {
     const postData = req.body;
     let data; 
     if(postData.length>1){
@@ -11,6 +14,11 @@ const postUsers = async(req,res)=>{
      data = await User.create(postData);
     }
     res.status(200).json(data)
+    
+    } catch (err) {
+        console.log('err>>>>>',err);
+        
+    }
 }
 
 
@@ -52,6 +60,19 @@ const updateUser = async(req,res)=>{
     res.status(200).json(data)
 }
 
+const usersRawQuery = async(req,res)=>{
+    const data = await db.sequelize.query('SELECT * FROM users WHERE city = ? OR lastName = ? ',
+            {
+              replacements: ['Indore','Gupta, Indian'],
+              model: User,
+              type: QueryTypes.SELECT,
+            }
+    );
+
+    res.status(200).json(data)
+
+}
+
 
 module.exports = {
     postUsers,
@@ -59,5 +80,6 @@ module.exports = {
     getUser,
     deleteAllUser,
     deleteUser,
-    updateUser
+    updateUser,
+    usersRawQuery
 }
