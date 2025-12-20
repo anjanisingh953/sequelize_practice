@@ -31,6 +31,16 @@ module.exports = (sequelize,DataTypes)=>{
                 isEmail: {msg:'Please enter a valid email'}
             }
         },
+        age:{
+            type:DataTypes.INTEGER,
+            validate:{
+                customValidator(value) {
+                   if (value === null || this.age <= 18) {
+                      throw new Error("age can't be null unless age is less than 18");
+                   }
+                }
+            }
+        },
         city:{
             type:DataTypes.STRING,
             allowNull:false,
