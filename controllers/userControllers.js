@@ -61,11 +61,14 @@ const updateUser = async(req,res)=>{
 }
 
 const usersRawQuery = async(req,res)=>{
-    const data = await db.sequelize.query('SELECT * FROM users WHERE city = ? OR lastName = ? ',
+    const city = req.body.city || '';
+    const lastName = req.body.lastName || '';
+    const data = await db.sequelize.query('SELECT * FROM users WHERE city = :city OR lastName = :lastName ',
             {
-              replacements: ['Indore','Gupta, Indian'],
+              replacements: {city,lastName},
               model: User,
               type: QueryTypes.SELECT,
+              
             }
     );
 
