@@ -1,44 +1,35 @@
-const {QueryTypes} = require('sequelize');
- const db = require('../models/index');
- const User = db.user;
-
-
-// const postUsers = async(req,res)=>{
-    
-//     try {
-//     const postData = req.body;
-//     let data; 
-//     if(postData.length>1){
-//      data = await User.bulkCreate(postData);
-//     }else{
-//      data = await User.create(postData);
-//     }
-//     res.status(200).json(data)
-    
-//     } catch (err) {
-//         console.log('err>>>>>',err);
-        
-//     }
-// }
-
-
+const {QueryTypes,Op} = require('sequelize');
+const db = require('../models/index');
+const User = db.user;
 
 const postUsers = async(req,res)=>{
-    
     try {
-    const postData = req.body;
-    let data = await User.create(postData);
+     const postData = req.body;
+    let data; 
+    if(postData.length>1){
+     data = await User.bulkCreate(postData);
+    }else{
+     data = await User.create(postData);
+    }
     res.status(200).json(data)
     } catch (err) {
         let err_msg = ''
-        err.errors.map((val)=>err_msg += val.message+'. ');
+        err && err.errors.map((val)=>err_msg += val.message+'. ');
         res.status(200).json({err_msg});
     }
 }
 
 
 const getUsers = async(req,res)=>{
-    const data = await User.findAll({});
+    const data = await User.findAll({
+         attributes:[
+          'id','age',
+          [db.sequelize.fn('COUNT',db.sequelize.col('age')),'countTotal']
+        ],        
+        group:['age'],
+        offset:1,
+        limit:2        
+    });
     res.status(200).json(data)
 }
 

@@ -7,11 +7,9 @@ module.exports = (sequelize,DataTypes)=>{
         },
         age:{type:DataTypes.INTEGER,
          validate:{
-          anyCustomName(value) {
-          if (parseInt(value) % 2 !== 0) {
-            throw new Error('Only even values are allowed!');
-          }}
-      }},
+          min:{args:18,msg:'Age should be minimum 18'}  
+        }
+      },
         city:{type:DataTypes.STRING,allowNull:false,
              validate: {
                 isIn: {
