@@ -3,21 +3,36 @@ const {QueryTypes} = require('sequelize');
  const User = db.user;
 
 
+// const postUsers = async(req,res)=>{
+    
+//     try {
+//     const postData = req.body;
+//     let data; 
+//     if(postData.length>1){
+//      data = await User.bulkCreate(postData);
+//     }else{
+//      data = await User.create(postData);
+//     }
+//     res.status(200).json(data)
+    
+//     } catch (err) {
+//         console.log('err>>>>>',err);
+        
+//     }
+// }
+
+
+
 const postUsers = async(req,res)=>{
     
     try {
     const postData = req.body;
-    let data; 
-    if(postData.length>1){
-     data = await User.bulkCreate(postData);
-    }else{
-     data = await User.create(postData);
-    }
+    let data = await User.create(postData);
     res.status(200).json(data)
-    
     } catch (err) {
-        console.log('err>>>>>',err);
-        
+        let err_msg = ''
+        err.errors.map((val)=>err_msg += val.message+'. ');
+        res.status(200).json({err_msg});
     }
 }
 

@@ -21,11 +21,12 @@ db.sequelize = sequelize;
 db.contact = require('./contact')(sequelize,DataTypes)
 db.user = require('./user')(sequelize,DataTypes,Model)
 
-// const User = db.user
+const User = db.user
+User.sync();
 // User.sync({ force: true });
 
 
-db.sequelize.sync();
+// db.sequelize.sync();
 // db.sequelize.sync({force:true});
 // db.sequelize.drop();
 
