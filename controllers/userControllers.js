@@ -22,13 +22,9 @@ const postUsers = async(req,res)=>{
 
 const getUsers = async(req,res)=>{
     const data = await User.findAll({
-         attributes:[
-          'id','age',
-          [db.sequelize.fn('COUNT',db.sequelize.col('age')),'countTotal']
-        ],        
-        group:['age'],
-        offset:1,
-        limit:2        
+          where: {
+    firstName: 'Roshni'
+  }        
     });
     res.status(200).json(data)
 }
@@ -82,6 +78,22 @@ const usersRawQuery = async(req,res)=>{
 
 }
 
+const oneToOneUser = async(req,res)=>{
+
+//   const data = await User.create({firstName:"Damini",lastName:"Mehta",email:"damini123@gmail.com"})
+//     if(data && data.id){
+//      await Contact.create({permanent_address:"Bihar",current_address:"Indore",
+//          UserId:data.id })
+//      }
+ 
+    const data = await Contact.findAll({
+            attributes:['current_address'],
+            include:[{model:User,attributes:['firstName']}]
+
+    });
+ 
+    res.status(200).json({data})
+}
 
 module.exports = {
     postUsers,
@@ -90,5 +102,6 @@ module.exports = {
     deleteAllUser,
     deleteUser,
     updateUser,
-    usersRawQuery
+    usersRawQuery,
+    oneToOneUser
 }

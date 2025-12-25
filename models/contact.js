@@ -1,5 +1,5 @@
 module.exports = (sequelize,DataTypes)=>{
-  sequelize.define('contact',{
+  const Contact = sequelize.define('Contact',{
         permanent_address:{
             type: DataTypes.STRING,
             allowNull : false
@@ -8,4 +8,5 @@ module.exports = (sequelize,DataTypes)=>{
             type: DataTypes.STRING,
         }
   })
+    return Contact;  
 }
