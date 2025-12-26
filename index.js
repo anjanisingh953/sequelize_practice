@@ -27,6 +27,8 @@ app.delete('/users',userController.deleteAllUser)
 app.delete('/users/:id',userController.deleteUser)
 app.patch('/users/:id',userController.updateUser)
 app.post('/usersrawquery',userController.usersRawQuery)
+app.get('/one-to-one',userController.oneToOneUser)
+app.get('/lazy-loading',userController.lazyLoadingUser)
 
 
 

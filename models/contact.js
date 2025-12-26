@@ -7,6 +7,6 @@ module.exports = (sequelize,DataTypes)=>{
         current_address:{
             type: DataTypes.STRING,
         }
-  })
+  },{timestamps:false})
     return Contact;  
 }

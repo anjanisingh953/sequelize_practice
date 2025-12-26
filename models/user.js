@@ -9,18 +9,21 @@ module.exports = (sequelize,DataTypes)=>{
          validate:{
           min:{args:18,msg:'Age should be minimum 18'}  
         }
-      },
-        city:{type:DataTypes.STRING,allowNull:false,
-             validate: {
-                isIn: {
-                  args: [['Indore', 'Bhopal', 'Jabalpur', 'Delhi']],
-                  msg: 'City name must be Indore, Bhopal, Jabalpur or Delhi'
-               }
-             }
-        }
-    },{
+      }
+      // ,
+    //     city:{type:DataTypes.STRING,allowNull:false,
+    //          validate: {
+    //             isIn: {
+    //               args: [['Indore', 'Bhopal', 'Jabalpur', 'Delhi']],
+    //               msg: 'City name must be Indore, Bhopal, Jabalpur or Delhi'
+    //            }
+    //          }
+    //     }
+    },
+    {
         tableName:'users',
         paranoid: true,
+        timestamps:false
     })
   return User;  
 }

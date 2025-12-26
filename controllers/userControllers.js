@@ -1,6 +1,7 @@
 const {QueryTypes,Op} = require('sequelize');
 const db = require('../models/index');
 const User = db.user;
+const Contact = db.contact;
 
 const postUsers = async(req,res)=>{
     try {
@@ -80,20 +81,37 @@ const usersRawQuery = async(req,res)=>{
 
 const oneToOneUser = async(req,res)=>{
 
-//   const data = await User.create({firstName:"Damini",lastName:"Mehta",email:"damini123@gmail.com"})
-//     if(data && data.id){
-//      await Contact.create({permanent_address:"Bihar",current_address:"Indore",
-//          UserId:data.id })
-//      }
+  const data = await User.create({firstName:"Venkatesh",lastName:"Gupta",email:"venkatesh123@gmail.com",age:"25"})
+    if(data && data.id){
+     await Contact.create({permanent_address:"Ranchi",current_address:"Bhopal",
+         UserId:data.id })
+     }
  
-    const data = await Contact.findAll({
-            attributes:['current_address'],
-            include:[{model:User,attributes:['firstName']}]
+    // const data = await Contact.findAll({
+    //         attributes:['current_address'],
+    //         include:[{model:User,attributes:['firstName']}]
 
+    // });
+ 
+    res.status(200).json({data})
+}
+
+
+const lazyLoadingUser = async(req,res)=>{
+    const data = await User.findOne({where:{id:17}}); 
+    const contactDetails = await data.getContact(); 
+    res.status(200).json({data,contactDetails})
+}
+
+const eagerLoadingUser = async(req,res)=>{
+    const data = await User.findAll({
+        attributes:['current_address'],
+        include:[{model:User,attributes:['firstName']}]
     });
  
     res.status(200).json({data})
 }
+
 
 module.exports = {
     postUsers,
@@ -103,5 +121,7 @@ module.exports = {
     deleteUser,
     updateUser,
     usersRawQuery,
-    oneToOneUser
+    oneToOneUser,
+    lazyLoadingUser,
+    eagerLoadingUser
 }
