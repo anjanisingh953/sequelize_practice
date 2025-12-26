@@ -24,10 +24,10 @@ db.education = require('./education')(sequelize,DataTypes)
 
 
 db.user.hasMany(db.contact);
-db.contact.belongsTo(db.user); 
+db.contactUser= db.contact.belongsTo(db.user); 
 
-db.user.hasMany(db.education);
-db.education.belongsTo(db.user); 
+db.contact.hasMany(db.education);
+db.education.belongsTo(db.contact); 
 
 // const User = db.user
 // User.sync();

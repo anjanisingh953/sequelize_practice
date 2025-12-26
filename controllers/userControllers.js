@@ -120,6 +120,22 @@ const eagerLoadingUser = async(req,res)=>{
     res.status(200).json({data})
 }
 
+const creatorUser = async(req,res)=>{
+ 
+    const data = await Contact.create({
+        permanent_address:"Bihar",
+        current_address:"Indore",
+        User:{
+            firstName:"Anjani",
+            lastName:"Singh",
+            email:"anjani123@gmail.com"
+        }
+    },{
+        include:[db.contactUser]
+    })
+
+    res.status(200).json({data})
+}
 
 module.exports = {
     postUsers,
@@ -131,5 +147,6 @@ module.exports = {
     usersRawQuery,
     oneToOneUser,
     lazyLoadingUser,
-    eagerLoadingUser
+    eagerLoadingUser,
+    creatorUser
 }
