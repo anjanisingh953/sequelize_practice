@@ -4,7 +4,7 @@ const sequelize = new Sequelize('employeedb','root','',{
     host:'localhost',
     dialect:'mysql',
     port:3307,
-    logging:false
+    // logging:false
 });
 
 try {
@@ -20,10 +20,14 @@ db.sequelize = sequelize;
 
 db.contact = require('./contact')(sequelize,DataTypes)
 db.user = require('./user')(sequelize,DataTypes,Model)
+db.education = require('./education')(sequelize,DataTypes)
 
 
-db.user.hasOne(db.contact);
+db.user.hasMany(db.contact);
 db.contact.belongsTo(db.user); 
+
+db.user.hasMany(db.education);
+db.education.belongsTo(db.user); 
 
 // const User = db.user
 // User.sync();

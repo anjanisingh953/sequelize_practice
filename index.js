@@ -29,6 +29,7 @@ app.patch('/users/:id',userController.updateUser)
 app.post('/usersrawquery',userController.usersRawQuery)
 app.get('/one-to-one',userController.oneToOneUser)
 app.get('/lazy-loading',userController.lazyLoadingUser)
+app.get('/eager-loading',userController.eagerLoadingUser)
 
 
 

@@ -2,6 +2,7 @@ const {QueryTypes,Op} = require('sequelize');
 const db = require('../models/index');
 const User = db.user;
 const Contact = db.contact;
+const Education = db.education;
 
 const postUsers = async(req,res)=>{
     try {
@@ -81,9 +82,9 @@ const usersRawQuery = async(req,res)=>{
 
 const oneToOneUser = async(req,res)=>{
 
-  const data = await User.create({firstName:"Venkatesh",lastName:"Gupta",email:"venkatesh123@gmail.com",age:"25"})
+  const data = await User.create({firstName:"Vanshika",lastName:"Mehra",email:"vanshika123@gmail.com",age:"27"})
     if(data && data.id){
-     await Contact.create({permanent_address:"Ranchi",current_address:"Bhopal",
+     await Contact.create({permanent_address:"Vidisha",current_address:"Indore",
          UserId:data.id })
      }
  
@@ -105,8 +106,15 @@ const lazyLoadingUser = async(req,res)=>{
 
 const eagerLoadingUser = async(req,res)=>{
     const data = await User.findAll({
-        attributes:['current_address'],
-        include:[{model:User,attributes:['firstName']}]
+        // attributes:['id','firstName'],
+        include:[
+           {
+            model:Contact,
+           },
+           {
+            model:Education
+           }
+    ]
     });
  
     res.status(200).json({data})
