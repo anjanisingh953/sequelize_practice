@@ -82,9 +82,9 @@ const usersRawQuery = async(req,res)=>{
 
 const oneToOneUser = async(req,res)=>{
 
-  const data = await User.create({firstName:"Vanshika",lastName:"Mehra",email:"vanshika123@gmail.com",age:"27"})
+  const data = await User.create({firstName:"Nidhi",lastName:"Sharma",email:"nidhi@gmail.com",age:"18"})
     if(data && data.id){
-     await Contact.create({permanent_address:"Vidisha",current_address:"Indore",
+     await Contact.create({permanent_address:"West Bengal",current_address:"Jabalpur",
          UserId:data.id })
      }
  
@@ -138,11 +138,24 @@ const creatorUser = async(req,res)=>{
 }
 
 const scopesUser =  async(req,res)=>{
-     User.addScope('checkVoter',{
-        where:{age:{[Op.gt]:20}}
-     })   
+    //  User.addScope('checkVoter',{
+    //     where:{age:{[Op.gt]:20}}
+    //  })
+     
+     User.addScope('includeContact',{
+        include:{
+            model:Contact,
+            attributes:['permanent_address']
+        }
+     })
 
-    const data = await User.scope('checkVoter').findAll({});
+
+      User.addScope('includeAttributes',{
+           attributes:['firstName','email']
+        })
+
+     
+    const data = await User.scope(['includeContact','includeAttributes']).findAll({});
     res.status(200).json({data})
 }
 
