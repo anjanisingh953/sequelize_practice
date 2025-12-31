@@ -137,6 +137,15 @@ const creatorUser = async(req,res)=>{
     res.status(200).json({data})
 }
 
+const scopesUser =  async(req,res)=>{
+     User.addScope('checkVoter',{
+        where:{age:{[Op.gt]:20}}
+     })   
+
+    const data = await User.scope('checkVoter').findAll({});
+    res.status(200).json({data})
+}
+
 module.exports = {
     postUsers,
     getUsers,
@@ -148,5 +157,6 @@ module.exports = {
     oneToOneUser,
     lazyLoadingUser,
     eagerLoadingUser,
-    creatorUser
+    creatorUser,
+    scopesUser
 }
