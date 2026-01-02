@@ -22,12 +22,17 @@ db.contact = require('./contact')(sequelize,DataTypes)
 db.user = require('./user')(sequelize,DataTypes,Model)
 db.education = require('./education')(sequelize,DataTypes)
 
+db.post = require('./post')(sequelize,DataTypes)
+db.reaction = require('./reaction')(sequelize,DataTypes)
 
 db.user.hasMany(db.contact);
 db.contactUser= db.contact.belongsTo(db.user); 
 
 db.contact.hasMany(db.education);
 db.education.belongsTo(db.contact); 
+
+db.post.hasMany(db.reaction);
+db.reaction.belongsTo(db.post);
 
 // const User = db.user
 // User.sync();

@@ -32,6 +32,7 @@ app.get('/lazy-loading',userController.lazyLoadingUser)
 app.get('/eager-loading',userController.eagerLoadingUser)
 app.get('/create-by-association',userController.creatorUser)
 app.get('/scopes',userController.scopesUser)
+app.get('/sub-query',userController.subQueryUser)
 
 
 
